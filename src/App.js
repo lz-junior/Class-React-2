@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './estilo.css'
+import './estilo.css'
 
 class App extends Component {
   constructor(props) {
