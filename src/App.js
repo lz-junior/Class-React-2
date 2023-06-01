@@ -1,71 +1,40 @@
 import React, { Component } from 'react';
+import styles from './estilo.css'
 
 class App extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      form: {
-        nome: '',
-        email: '',
-        senha: '',
-        sexo: ''
-      }
+      textoFrase: ''
     };
-    this.dadosForm = this.dadosForm.bind(this);
+    this.quebraBiscoito = this.quebraBiscoito.bind(this);
+    this.frases = ['frase 01', 'frase 02', 'frase 03', 'frase 04', 'frase 05', 'frase 06', 'frase 07'];
   }
-  dadosForm(e) {
-    let form = this.state.form;
-    form[e.target.name] = e.target.value;
-    this.setState({form: form})
+
+  quebraBiscoito() {
+    let state = this.state;
+    let numeroAleatorio = Math.floor(Math.random() * this.frases.length);
+    state.textoFrase = '" ' + this.frases[numeroAleatorio] + ' "';
+    this.setState(state);
   }
 
   render() {
     return (
-      <div>
-        <h1>Novo Usuário</h1>
-        {this.state.error && <p>{this.state.error}</p>}
-
-        <form onSubmit={this.cadastrar}>
-
-          <label>Nome:</label>
-          <input
-            type="text" 
-            name="nome"
-            value={this.state.form.nome} 
-            onChange={this.dadosForm}/><br/>
-
-          <label>E-mail:</label>
-          <input
-            type="email"
-            name="email"
-            value={this.state.form.email}
-            onChange={this.dadosForm}/><br/>
-
-          <label>Senha:</label>
-          <input 
-            type="password"
-            name="senha"
-            value={this.state.form.senha}
-            onChange={this.dadosForm}/><br/>
-
-          <label>Sexo:</label>
-          <select 
-            name="sexo" 
-            value={this.state.form.sexo} 
-            onChange={this.dadosForm}>
-            <option value="masculino">Masculino</option>
-            <option value="feminino">Feminino</option>
-          </select><br/>
-
-          <button type="submit">Cadastrar</button>
-        </form>
-        <div>
-          <h3>{this.state.form.nome}</h3>
-          <h3>{this.state.form.email}</h3>
-          <h3>{this.state.form.senha}</h3>
-          <h3>{this.state.form.sexo}</h3>
-        </div>
+      <div className="container">
+        <img src={require('./assets/biscoito.png')} className="img"/>
+        <Botao nome="Abrir biscoito" acaoBtn={this.quebraBiscoito}/>
+        <h3 className="textoFrase">{this.state.textoFrase}</h3>
       </div>  
+    )
+  }
+}
+
+class Botao extends Component {
+  render() {
+    return (
+      <div>
+        <button onClick={this.props.acaoBtn}>{this.props.nome}</button>
+      </div>
     )
   }
 }
