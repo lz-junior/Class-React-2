@@ -1,39 +1,58 @@
-import React, { Component } from 'react';
-import './estilo.css'
+import React, { Component } from 'react'
+import './style.css'
 
 class App extends Component {
+
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      textoFrase: ''
+      numero: 0,
+      botao: "INICIAR"
     };
-    this.quebraBiscoito = this.quebraBiscoito.bind(this);
-    this.frases = ['frase 01', 'frase 02', 'frase 03', 'frase 04', 'frase 05', 'frase 06', 'frase 07'];
+    this.timer = null;
+    this.iniciar = this.iniciar.bind(this);
+    this.parar = this.parar.bind(this);
   }
 
-  quebraBiscoito() {
+  iniciar() {
+
+    let state = this.state
+
+    if(this.timer !== null){
+      clearInterval(this.timer);
+      this.timer = null;
+      state.botao = 'INICIAR'
+    }else{ 
+      this.timer = setInterval(()=> {
+        let state = this.state;
+        state.numero += 0.1;
+        this.setState(state);
+      },100);
+      state.botao = 'PAUSAR';
+    }
+    this.setState(state);
+  }
+
+  parar() {
+    if(this.timer !== null){
+      clearInterval(this.timer);
+      this.timer = null;
+    }
     let state = this.state;
-    let numeroAleatorio = Math.floor(Math.random() * this.frases.length);
-    state.textoFrase = '" ' + this.frases[numeroAleatorio] + ' "';
+    state.numero = 0;
+    state.botao = 'INICIAR';
     this.setState(state);
   }
 
   render() {
     return (
       <div className="container">
-        <img src={require('./assets/biscoito.png')} className="img"/>
-        <Botao nome="Abrir biscoito" acaoBtn={this.quebraBiscoito}/>
-        <h3 className="textoFrase">{this.state.textoFrase}</h3>
-      </div>  
-    )
-  }
-}
-
-class Botao extends Component {
-  render() {
-    return (
-      <div>
-        <button onClick={this.props.acaoBtn}>{this.props.nome}</button>
+        <img src={require('./assets/cronometro.png')} className="img" />
+        <a className="timer">{this.state.numero.toFixed(1)}</a>
+        <div className='areaBtn'>
+          <a className='botao' onClick={this.iniciar}>{this.state.botao}</a>
+          <a className='botao' onClick={this.parar}>PARAR</a>
+        </div>
       </div>
     )
   }
