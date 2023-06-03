@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './style.css'
 
 class App extends Component {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -15,10 +14,9 @@ class App extends Component {
   }
 
   iniciar() {
-
     let state = this.state
 
-    if(this.timer !== null){
+    if (this.timer !== null) {
       clearInterval(this.timer);
       this.timer = null;
       state.botao = 'INICIAR'
