@@ -7,7 +7,7 @@
 }
 
 .img {
-  width: 350px;
+  width: 320px;
   height: 350px;
   padding-top: 100px;
 }
@@ -24,7 +24,7 @@
 
 .botao {
   width: 150px;
-  background-color: #003e6d;
+  background-color: #002642;
   font-size: 20px;
   text-align: center;
   border-radius: 15px;
@@ -36,6 +36,6 @@
 
 .botao:hover {
   opacity: 0.9;
-  color: #000;
+  color: #00040f;
   transition: all 0.50s;
 }
