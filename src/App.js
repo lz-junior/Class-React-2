@@ -2,12 +2,15 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 function App() {
 
+  // =====> useState <=====
   const [tarefas, setTarefas] = useState([
     'Pagar a conta de luz',
     'Estudar React Hooks'
   ]);
   const [input, setInput] = useState('');
 
+
+  // =====> useEffect <=====
   useEffect(()=> {
     const tarefasStorage = localStorage.getItem('tarefas');
     if(tarefasStorage) {
@@ -19,12 +22,17 @@ function App() {
     localStorage.setItem('tarefas', JSON.stringify(tarefas));
   }, [tarefas]);
 
+
+  // =====> useMemo <=====
   const totalTarefas = useMemo(()=> tarefas.length, [tarefas]);
 
+  
+  // =====> useCallback <=====
   const handleAdd = useCallback(()=> {
     setTarefas([...tarefas, input]);
     setInput('');
   }, [input, tarefas]);
+
 
   return (
     <div>
