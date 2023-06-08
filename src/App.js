@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import styles from './estilo.css'
 
 function App() {
 
@@ -36,7 +37,7 @@ function App() {
 
   // =====> return <=====
   return (
-    <div>
+    <div className="container">
       <ul>
         {tarefas.map(tarefa => (
           <li key={tarefa}>{tarefa}</li>
@@ -49,7 +50,7 @@ function App() {
         value={input}
         onChange={e => setInput(e.target.value)}
       />
-      <button type="button" onClick={handleAdd}>Adicionar</button>
+      <button className="btn" type="button" onClick={handleAdd}>Adicionar</button>
     </div>
   );
 }
