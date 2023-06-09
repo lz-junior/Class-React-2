@@ -47,6 +47,7 @@ function App() {
       <strong>Você tem {totalTarefas} tarefas!</strong><br/>
       <input 
         type="text"
+        placeholder="Digite sua tarefa..."
         value={input}
         onChange={e => setInput(e.target.value)}
       />
