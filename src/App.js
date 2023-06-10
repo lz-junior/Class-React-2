@@ -48,7 +48,7 @@ function App() {
       <input 
         type="text"
         className="input"
-        placeholder="Digite sua tarefa..."
+        placeholder="Qual será sua próxima tarefa?"
         value={input}
         onChange={e => setInput(e.target.value)}
       />
