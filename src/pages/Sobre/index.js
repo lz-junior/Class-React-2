@@ -9,6 +9,6 @@ function Sobre() {
       <Link to="/contato">Contato</Link>
     </div>
   )
-}
+};
 
 export default Sobre;

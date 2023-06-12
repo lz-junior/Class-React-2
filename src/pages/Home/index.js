@@ -10,6 +10,6 @@ function Home() {
       <Link to="/sobre">Sobre</Link>      
     </div>
   )
-}
+};
 
 export default Home;
