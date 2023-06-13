@@ -4,7 +4,7 @@ import './style.css';
 function Header() {
   return (
     <header>
-      <h2>Menu Header</h2>
+      <h2>Menu da Empresa</h2>
       <div className="menu">
         <Link to="/">Home</Link>
         <Link to="/sobre">Sobre</Link>

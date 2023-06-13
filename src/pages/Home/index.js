@@ -7,7 +7,9 @@ function Home() {
       <span>Curso de React</span><br/>
 
       <Link to="/contato">Contato</Link><br/>
-      <Link to="/sobre">Sobre</Link>      
+      <Link to="/sobre">Sobre</Link>
+      <hr/>
+      <Link to="/produto/123">Acessar produto 123</Link>
     </div>
   )
 };
