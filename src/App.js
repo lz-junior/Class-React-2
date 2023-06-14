@@ -1,7 +1,9 @@
+import RoutesApp from './routes';
+
 function App() {
   return (
     <div className="app">
-      <h2>teste</h2>
+      <RoutesApp />
     </div>
   )
 }
