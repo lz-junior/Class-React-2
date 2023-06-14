@@ -3,7 +3,7 @@
 function Filme() {
   return (
     <div>
-      <h2>Filmes</h2>
+      <h2>Sinopse do filme</h2>
     </div>
   )
 }

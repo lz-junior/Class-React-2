@@ -3,7 +3,7 @@
 function Home() {
   return (
     <div>
-      <h1>Bem-vindo a Home</h1>
+      <h1>Bem-vindo a Prime Flix</h1>
     </div>
   )
 }
