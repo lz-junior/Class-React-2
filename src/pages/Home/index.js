@@ -1,5 +1,7 @@
 import {useEffect, useState} from 'react';
 import api from '../../services/api';
+import {Link} from 'react-router-dom';
+import './home.css';
 
 // URL da API: /movie/now_playing?api_key=4fb839c6ef39db9d421b671118ce07fe
 
@@ -15,14 +17,26 @@ function Home() {
           page: 1,
         }
       })
-      console.log(response.data.results);
+      // console.log(response.data.results.slice(0, 10));
+      setFilmes(response.data.results.slice(0, 10))
     }
+
     loadFilmes();
   }, []);
 
   return (
-    <div>
-      <h1>Bem-vindo a Prime Flix</h1>
+    <div className="container">
+      <div className="lista-filmes">
+        {filmes.map((filme)=> {
+          return (
+            <article key={filme.id}>
+              <strong>{filme.title}</strong>
+              <img src={`https://image.tmdb.org/t/p/original/${filme.poster_path}`} alt={filme.id}/>
+              <Link to={`/filmes/${filme.id}`}>Acessar</Link>
+            </article>
+          )
+        })}
+      </div>
     </div>
   )
 }
