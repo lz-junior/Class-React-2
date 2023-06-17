@@ -1,22 +1,23 @@
 import {useEffect, useState} from 'react';
 import api from '../../services/api';
 
-// URL da API: /movie/550?api_key=4fb839c6ef39db9d421b671118ce07fe
+// URL da API: /movie/now_playing?api_key=4fb839c6ef39db9d421b671118ce07fe
 
 function Home() {
   const [filmes, setFilmes] = useState([]);
 
   useEffect(()=> {
     async function loadFilmes() {
-      const response = await api.get("movie/550", {
+      const response = await api.get("movie/now_playing", {
         params: {
           api_key: "4fb839c6ef39db9d421b671118ce07fe",
           language: "pt-BR",
           page: 1,
         }
       })
-      console.log(response)
+      console.log(response.data.results);
     }
+    loadFilmes();
   }, []);
 
   return (
