@@ -42,8 +42,12 @@ function Filme() {
 
 // ===============>  FUNCTIONS  <===============
 function salvarFilme() {
+  // colocamos dentro da const as coisas que vem dentro dessa chave que esta no localStorage
   const minhaLista = localStorage.getItem("@primeflix");
 
+  // esses itens dentro do localStorage vem como string, entao é preciso transforma-los para json.
+  // estamos salvando dentro desse let essa lista
+  // e se caso não tiver nada dentro dessa lista ele retorna uma array vazia.
   let filmesSalvos = JSON.parse(minhaLista) || [];
 
   // verifica se dentro do localStorage já tem id do filme que está salvando 
