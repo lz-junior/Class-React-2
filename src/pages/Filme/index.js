@@ -1,15 +1,18 @@
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import api from '../../services/api';
 import './filme-info.css';
 
 
 function Filme() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [filme, setFilme] = useState({});
   const [loading, setLoading] = useState(true);
 
 
+// ===============>  CICLOS  <===============
   useEffect(()=> {
     async function loadFilme() {
       await api.get(`/movie/${id}`, {
@@ -23,7 +26,9 @@ function Filme() {
         setLoading(false);
       })
       .catch(()=> {
-        console.log("filme não encontrado")
+        console.log("filme não encontrado");
+        navigate("/", {replace: true});
+        return;
       })
     };
     loadFilme();
@@ -31,10 +36,11 @@ function Filme() {
     return ()=> {
       console.log("Componente foi desmontado");
     };
-  }, []);
+  }, [navigate, id]);
 
 
 
+// ===============>  LOADING PAGE  <===============
   if (loading) {
     return (
       <div className="filme-info">
@@ -45,6 +51,7 @@ function Filme() {
 
 
 
+// ===============>  RETURN  <===============
   return (
     <div className="filme-info">
       <h1>{filme.title}</h1>
@@ -60,9 +67,7 @@ function Filme() {
             Trailer
           </a>
         </button>
-
       </div>
-
     </div>
   )
 };
