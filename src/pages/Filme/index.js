@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import api from '../../services/api';
+import './filme-info.css';
+
 
 function Filme() {
   const { id } = useParams();
@@ -23,14 +25,15 @@ function Filme() {
       .catch(()=> {
         console.log("filme não encontrado")
       })
-    }
+    };
     loadFilme();
 
     return ()=> {
       console.log("Componente foi desmontado");
     };
-
   }, []);
+
+
 
   if (loading) {
     return (
@@ -38,7 +41,9 @@ function Filme() {
         <h1>Carregando detalhes...</h1>
       </div>
     )
-  }
+  };
+
+
 
   return (
     <div className="filme-info">
@@ -47,7 +52,17 @@ function Filme() {
       <h3>Sinopse</h3>
       <span>{filme.overview}</span>
       <strong>Avaliação: {filme.vote_average} / 10</strong>
-    
+
+      <div className="area-buttons">
+        <button>Salvar</button>
+        <button>
+          <a href='#'>
+            Trailer
+          </a>
+        </button>
+
+      </div>
+
     </div>
   )
 };
