@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { db } from './firebaseConnection';
-import { doc, setDoc, collection, addDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, addDoc, getDoc } from 'firebase/firestore';
 
 import './app.css';
 
@@ -34,6 +34,16 @@ function App() {
     .catch((error)=> {console.log("ERRO" + error)})
   }
 
+  async function buscarPost() {
+    const postRef = doc(db, "posts", "12345");
+    await getDoc(postRef)
+      .then((snapshot)=> {
+        setAutor(snapshot.data().autor)
+        setTitulo(snapshot.data().titulo)
+      })
+      .catch(()=> {"ERRO AO BUSCAR"})
+  }
+
 
   return (
     <div>
@@ -55,6 +65,7 @@ function App() {
           onChange={(e)=> setAutor(e.target.value)}/>
 
         <button onClick={handleApp}>Cadastrar</button>
+        <button onClick={buscarPost}>Buscar post</button>
       </div>
 
     </div>
