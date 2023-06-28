@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { db } from './firebaseConnection';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, addDoc } from 'firebase/firestore';
 
 import './app.css';
 
@@ -12,15 +12,26 @@ function App() {
 
 
   async function handleApp() {
-    await setDoc(doc(db, "posts", "12345"), {
+    // await setDoc(doc(db, "posts", "12345"), {
+    //   titulo: titulo,
+    //   autor: autor,
+    // })
+    // .then(()=> {
+    //   console.log("DADOS REGISTRADOS COM SUCESSO")
+    // })
+    // .catch((error)=> {console.log("GEROU ERRO" + error)
+    // })
+
+    await addDoc(collection(db, "posts"), {
       titulo: titulo,
       autor: autor,
     })
     .then(()=> {
-      console.log("DADOS REGISTRADOS COM SUCESSO")
+      console.log("CADASTRADO COM SUCESSO")
+      setTitulo('');
+      setAutor('')
     })
-    .catch((error)=> {console.log("GEROU ERRO" + error)
-    })
+    .catch((error)=> {console.log("ERRO" + error)})
   }
 
 
