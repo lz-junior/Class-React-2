@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { db } from './firebaseConnection';
-import { doc, setDoc, collection, addDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, addDoc, getDoc, getDocs } from 'firebase/firestore';
 
 import './app.css';
 
@@ -10,18 +10,9 @@ function App() {
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
 
+  const [posts, setPosts] = useState([]);
 
   async function handleApp() {
-    // await setDoc(doc(db, "posts", "12345"), {
-    //   titulo: titulo,
-    //   autor: autor,
-    // })
-    // .then(()=> {
-    //   console.log("DADOS REGISTRADOS COM SUCESSO")
-    // })
-    // .catch((error)=> {console.log("GEROU ERRO" + error)
-    // })
-
     await addDoc(collection(db, "posts"), {
       titulo: titulo,
       autor: autor,
@@ -32,16 +23,41 @@ function App() {
       setAutor('')
     })
     .catch((error)=> {console.log("ERRO" + error)})
+
+    // await setDoc(doc(db, "posts", "12345"), {
+    //   titulo: titulo,
+    //   autor: autor,
+    // })
+    // .then(()=> {
+    //   console.log("DADOS REGISTRADOS COM SUCESSO")
+    // })
+    // .catch((error)=> {console.log("GEROU ERRO" + error)
+    // })
   }
 
   async function buscarPost() {
-    const postRef = doc(db, "posts", "12345");
-    await getDoc(postRef)
-      .then((snapshot)=> {
-        setAutor(snapshot.data().autor)
-        setTitulo(snapshot.data().titulo)
+    const postsRef = collection(db, "posts");
+    await getDocs(postsRef)
+    .then((snapshot)=> {
+      let lista = [];
+      snapshot.forEach((doc)=> {
+        lista.push({
+          id: doc.id,
+          titulo: doc.data().titulo,
+          autor: doc.data().autor,
+        })
       })
-      .catch(()=> {"ERRO AO BUSCAR"})
+      setPosts(lista);
+    })
+
+
+    // const postRef = doc(db, "posts", "12345");
+    // await getDoc(postRef)
+    //   .then((snapshot)=> {
+    //     setAutor(snapshot.data().autor)
+    //     setTitulo(snapshot.data().titulo)
+    //   })
+    //   .catch(()=> {"ERRO AO BUSCAR"})
   }
 
 
@@ -66,6 +82,17 @@ function App() {
 
         <button onClick={handleApp}>Cadastrar</button>
         <button onClick={buscarPost}>Buscar post</button>
+
+        <ul>
+          {posts.map((post)=> {
+            return (
+              <li key={post.id}>
+                <span>Título: {post.titulo} </span> <br/>
+                <span>Autor: {post.autor} </span> <br/><br/>
+              </li>
+            )
+          })}
+        </ul>
       </div>
 
     </div>
