@@ -1,7 +1,8 @@
-import { useState } from 'react';
+// ====================>  IMPORTS  <====================
+import { useState, useEffect } from 'react';
 
 import { db } from './firebaseConnection';
-import { doc, setDoc, collection, addDoc, getDoc, getDocs, updateDoc, deleteDoc } from 'firebase/firestore';
+import { doc, setDoc, collection, addDoc, getDoc, getDocs, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 
 import './app.css';
 
@@ -10,9 +11,28 @@ function App() {
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [idPost, setIdPost] = useState('');
-
   const [posts, setPosts] = useState([]);
 
+
+  useEffect(()=> {
+    async function loadPosts() {
+      const unsub = onSnapshot(collection(db, "posts"), (snapshot)=> {
+        let listaPost = [];
+        
+        snapshot.forEach((doc)=> {
+          listaPost.push({
+            id: doc.id,
+            titulo: doc.data().titulo,
+            autor: doc.data().autor,
+          })
+        })
+        setPosts(listaPost)
+      })
+    }
+    loadPosts()
+  }, [])
+
+// ====================>  FUNCTIONS  <====================
   async function handleApp() {
     await addDoc(collection(db, "posts"), {
       titulo: titulo,
@@ -50,8 +70,6 @@ function App() {
       })
       setPosts(lista);
     })
-
-
     // const postRef = doc(db, "posts", "12345");
     // await getDoc(postRef)
     //   .then((snapshot)=> {
@@ -78,7 +96,6 @@ function App() {
     })
   }
 
-
   async function excluirPost(id) {
     const docRef = doc(db, "posts", id)
     await deleteDoc(docRef)
@@ -89,7 +106,7 @@ function App() {
 
 
 
-
+// ====================>  RETURN  <====================
   return (
     <div>
       <h1>ReactJS + Firebase</h1>
