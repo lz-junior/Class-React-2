@@ -11,6 +11,10 @@ function App() {
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [idPost, setIdPost] = useState('');
+
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
   const [posts, setPosts] = useState([]);
 
 
@@ -104,6 +108,10 @@ function App() {
     })
   }
 
+  function novoUsuario() {
+    alert("teste")
+  }
+  
 
 
 // ====================>  RETURN  <====================
@@ -111,6 +119,28 @@ function App() {
     <div>
       <h1>ReactJS + Firebase</h1>
 
+
+      <div className="container">
+        <h2>Usuários</h2>
+        <label>E-mail:</label>
+        <input
+          value={email}
+          placeholder="teste@exemplo.com"
+          onChange={(e)=> setEmail(e.target.value)}
+          /> <br/>
+
+        <label>Senha:</label>
+        <input
+          value={senha}
+          placeholder="123indiozinhos"
+          onChange={(e)=> setSenha(e.target.value)}/>
+      </div> <br/>
+
+      <button onClick={novoUsuario}>Cadastrar</button>
+      
+      <br/><br/><hr/>
+
+      <h2>Posts</h2>
       <div className='container'>
 
         <label>ID do Post:</label>
