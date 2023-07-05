@@ -17,7 +17,8 @@ import {
 import { 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
+  onAuthStateChanged
 } from 'firebase/auth';
 
 import './app.css';
@@ -26,6 +27,7 @@ import './app.css';
 
 // ========================================>  APP FUNCTION  <========================================
 function App() {
+  // ==========> useSTATE
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [idPost, setIdPost] = useState('');
@@ -38,7 +40,7 @@ function App() {
 
   const [posts, setPosts] = useState([]);
 
-
+  // ==========> useEFFECT
   useEffect(()=> {
     async function loadPosts() {
       const unsub = onSnapshot(collection(db, "posts"), (snapshot)=> {
@@ -55,6 +57,26 @@ function App() {
       })
     }
     loadPosts()
+  }, [])
+
+  useEffect(()=> {
+    async function checkLogin() {
+      onAuthStateChanged(auth, (user)=> {
+        if (user) {
+          // se tem usuario logado ele entra aqui...
+          console.log(user);
+          setUser(true);
+          setUserDetail({
+            uid: user.uid,
+            email: user.email,
+          })
+        } else {
+          setUser(false);
+          setUserDetail({});
+        }
+      })
+    }
+    checkLogin();
   }, [])
 
 // ========================================>  FUNCTIONS  <========================================
