@@ -1,12 +1,26 @@
 // ====================>  IMPORTS  <====================
 import { useState, useEffect } from 'react';
 
-import { db } from './firebaseConnection';
-import { doc, setDoc, collection, addDoc, getDoc, getDocs, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
+import { db, auth } from './firebaseConnection';
+import { 
+  doc,
+  setDoc, 
+  collection,
+  addDoc, 
+  getDoc, 
+  getDocs, 
+  updateDoc, 
+  deleteDoc, 
+  onSnapshot 
+} from 'firebase/firestore';
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 import './app.css';
 
 
+
+// ====================>  APP FUNCTION  <====================
 function App() {
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
@@ -108,8 +122,20 @@ function App() {
     })
   }
 
-  function novoUsuario() {
-    alert("teste")
+  async function novoUsuario() {
+    await createUserWithEmailAndPassword(auth, email, senha)
+    .then(()=> {
+      console.log("cadastrado com sucesso");
+      setEmail('')
+      setSenha('')
+    })
+    .catch((error)=> {
+      if (error.code === 'auth/weak-password') {
+        alert("Senha muito fraca")
+      }else if (error.code === 'auth/email-already-in-use') {
+        alert("E-mail já cadastrado")
+      }
+    })
   }
   
 
@@ -118,7 +144,6 @@ function App() {
   return (
     <div>
       <h1>ReactJS + Firebase</h1>
-
 
       <div className="container">
         <h2>Usuários</h2>
