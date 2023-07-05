@@ -1,4 +1,4 @@
-// ====================>  IMPORTS  <====================
+// ========================================>  IMPORTS  <========================================
 import { useState, useEffect } from 'react';
 
 import { db, auth } from './firebaseConnection';
@@ -14,13 +14,17 @@ import {
   onSnapshot 
 } from 'firebase/firestore';
 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut
+} from 'firebase/auth';
 
 import './app.css';
 
 
 
-// ====================>  APP FUNCTION  <====================
+// ========================================>  APP FUNCTION  <========================================
 function App() {
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
@@ -28,6 +32,9 @@ function App() {
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+
+  const [user, setUser] = useState(false);
+  const [userDetail, setUserDetail] = useState({});
 
   const [posts, setPosts] = useState([]);
 
@@ -50,7 +57,7 @@ function App() {
     loadPosts()
   }, [])
 
-// ====================>  FUNCTIONS  <====================
+// ========================================>  FUNCTIONS  <========================================
   async function handleApp() {
     await addDoc(collection(db, "posts"), {
       titulo: titulo,
@@ -138,12 +145,47 @@ function App() {
     })
   }
   
+  async function logarUsuario() {
+    await signInWithEmailAndPassword(auth, email, senha)
+    .then((value)=> {
+      console.log("Usuário logado com sucesso");
+      console.log(value.user);
+
+      setUserDetail({
+        uid: value.user.uid,
+        email: value.user.email,
+      })
+      setUser(true);
+
+      setEmail('')
+      setSenha('')
+    })
+    .catch(()=> {
+      console.log("Erro ao fazer login")
+    })
+  }
+
+  async function fazerLogout() {
+    await signOut(auth)
+    setUser(false);
+    setUserDetail({});
+  }
 
 
-// ====================>  RETURN  <====================
+
+// ========================================>  RETURN  <========================================
   return (
     <div>
       <h1>ReactJS + Firebase</h1>
+
+      {user && (
+        <div>
+          <strong>Seja bem-vindo(a) Você está logado!</strong> <br/>
+          <span>ID: {userDetail.uid} - E-mail: {userDetail.email}</span> <br/>
+          <button onClick={fazerLogout}>Sair</button>
+          <br/> <br/>
+        </div>
+      )}
 
       <div className="container">
         <h2>Usuários</h2>
@@ -162,6 +204,7 @@ function App() {
       </div> <br/>
 
       <button onClick={novoUsuario}>Cadastrar</button>
+      <button onClick={logarUsuario}>Fazer login</button>
       
       <br/><br/><hr/>
 
