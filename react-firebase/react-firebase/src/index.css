@@ -1,0 +1,21 @@
+:root {
+  --firstColor: #15171a;
+  --secondColor: #fff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--firstColor);
+  color: var(--secondColor);
+  width: 100%;
+  font-family: sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
