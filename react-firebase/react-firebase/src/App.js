@@ -25,9 +25,12 @@ import './app.css';
 
 
 
+
+
 // ========================================>  APP FUNCTION  <========================================
 function App() {
-  // ==========> useSTATE
+
+  // ===============> useSTATE
   const [titulo, setTitulo] = useState('');
   const [autor, setAutor] = useState('');
   const [idPost, setIdPost] = useState('');
@@ -40,7 +43,9 @@ function App() {
 
   const [posts, setPosts] = useState([]);
 
-  // ==========> useEFFECT
+
+
+  // ===============> useEFFECT
   useEffect(()=> {
     async function loadPosts() {
       const unsub = onSnapshot(collection(db, "posts"), (snapshot)=> {
@@ -78,6 +83,8 @@ function App() {
     }
     checkLogin();
   }, [])
+
+
 
 // ========================================>  FUNCTIONS  <========================================
   async function handleApp() {
@@ -195,6 +202,8 @@ function App() {
 
 
 
+
+
 // ========================================>  RETURN  <========================================
   return (
     <div>
@@ -211,6 +220,7 @@ function App() {
 
       <div className="container">
         <h2>Usuários</h2>
+        
         <label>E-mail:</label>
         <input
           value={email}
@@ -227,7 +237,6 @@ function App() {
 
       <button onClick={novoUsuario}>Cadastrar</button>
       <button onClick={logarUsuario}>Fazer login</button>
-      
       <br/><br/><hr/>
 
       <h2>Posts</h2>
