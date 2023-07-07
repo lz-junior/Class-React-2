@@ -1,6 +1,7 @@
 :root {
   --firstColor: #15171a;
   --secondColor: #fff;
+  --button-color-blue: #3366ff;
 }
 
 * {
