@@ -1,21 +1,32 @@
 import {useState, useEffect} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { auth } from '../../firebaseConnection';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import './home.css';
-
-import { Link } from 'react-router-dom';
 
 export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
 
-
-  function handleLogin(e) {
+  async function handleLogin(e) {
     e.preventDefault();
     if (email !== '' && password !== '') {
-      alert("teste")
+      
+      await signInWithEmailAndPassword(auth, email, password)
+      .then(()=> {
+        // navegar para /home
+        navigate('/admin', {replace: true})
+      })
+      .catch(()=> {
+        console.log("ERRO AO FAZER O LOGIN catch")
+      })
+
     } else {
-      alert ("Preencha todos os campos")
+      console.log("ERRO AO FAZER O LOGIN")
     }
   }
 
@@ -36,7 +47,6 @@ export default function Home() {
         <input
           type="password"
           placeholder="******"
-          autoComplete={false}
           value={password}
           onChange={(e)=> setPassword(e.target.value)}
         />

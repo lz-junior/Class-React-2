@@ -1,17 +1,26 @@
 import {useState, useEffect} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { auth } from '../../firebaseConnection';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-import { Link } from 'react-router-dom';
+
 
 export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
 
-
-  function handleRegister(e) {
+  async function handleRegister(e) {
     e.preventDefault();
     if (email !== '' && password !== '') {
-      alert("teste")
+      await createUserWithEmailAndPassword(auth, email, password)
+      .then(()=> {
+        navigate('/admin', {replace:true})
+      })
+      .catch(()=> {
+        console.log("erro ao fazer o cadastro")
+      })
     } else {
       alert ("Preencha todos os campos")
     }
@@ -34,7 +43,6 @@ export default function Register() {
         <input
           type="password"
           placeholder="******"
-          autoComplete={false}
           value={password}
           onChange={(e)=> setPassword(e.target.value)}
         />
