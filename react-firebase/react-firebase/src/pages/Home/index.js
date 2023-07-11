@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <div className="home-container">
       <h1>ToDo List</h1>
-      <span>Your <strong>ToDo</strong> list wherever and whenever you need it.</span>
+      <span>Your <strong>ToDo</strong> List wherever and whenever you need it.</span>
       
       <form className="form" onSubmit={handleLogin}>
         <input
@@ -43,7 +43,7 @@ export default function Home() {
         <button type="submit">Login</button>
       </form>
 
-      <Link className="button-link" to="/register">Não possui uma conta? Cadastre-se</Link>
+      <Link className="button-link" to="/register">Don't you have an account? Sign in</Link>
     </div>
   )
 }
